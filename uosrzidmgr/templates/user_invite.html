@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>{{ i18n.invitation.header }}</h2>
+<p>
+	{{ i18n.invitation.description }}
+</p>
+<p>
+	<input type=text value="{{ invitation_link }}" />
+</p>
+<p>
+	<a href=/>← {{ i18n.back }}</a>
+</p>
+{% endblock %}

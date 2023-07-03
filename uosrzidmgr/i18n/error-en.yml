@@ -1,0 +1,35 @@
+---
+
+# LDAP based authentication handler for Leihs
+# Copyright 2022 ELAN e.V.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+invalid_credentials:
+  title: Invalid Credentials
+  message: |
+    Your username or password seems to be incorrect.
+    Please go back and try again.
+internal:
+  title: Error
+  message: |
+    An internal server error occurred.
+    This should not have happened.
+    Please report this to your administrator and try again later.
+non_it_admin:
+  title: IT admins only
+  message: |
+    The user you are trying to log-in wqith is not part of the IT admin group.
+    Make sure you used the correct user and you are marked as an IT admin
+    of your organizational unit.

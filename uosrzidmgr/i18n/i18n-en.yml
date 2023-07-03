@@ -1,0 +1,78 @@
+---
+
+# LDAP based authentication handler for Leihs
+# Copyright 2022 ELAN e.V.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+user_management: User management
+login: Login
+username: username
+password: password
+back: Back
+service_account:
+  header: Create service account
+  login: Login
+  management_login: Managed by
+  password: Password
+  password_confirm: Password (confirm)
+  create: Create account
+user_account:
+  header: Create user account
+  login: Login
+  password: Password
+  password_confirm: Password (confirm)
+  account_type:
+    title: Account type
+    staff: Staff
+    guest: Guest
+  person:
+    header: Personal information
+    gender:
+      title: Gender
+      male: Male
+      female: Female
+      diverse: Diverse
+      not_specified: Not specified
+    name:
+      given: Given name
+      family: Family name
+      title: Title
+    birthday: Birthday
+  address:
+    work: Work contact information
+    private: Private contact information
+    street: Street
+    street_no: No.
+    post_code: Post code
+    city: City
+    phone: Phone
+    email: Email
+  agb:
+    header: Terms of service
+    admin: |
+      By submitting this form, I confirm that the user for which the account
+      will be created was made aware of and consents to the current terms of
+      Osnabrück University's digital services.
+    user: |
+      By submitting this form, I confirm that I am aware of and consent to the
+      current terms of Osnabrück University's digital services.
+user_invite:
+  header: Create user invite
+invitation:
+  header: User invite
+  description: |
+    A user invitation has been created.
+    The invite is valid for two weeks.
+    Plewase copy the following link and have the user complete the form.

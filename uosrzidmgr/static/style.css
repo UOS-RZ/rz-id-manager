@@ -1,0 +1,141 @@
+body {
+	color: #000;
+	background-color: #fff;
+	font-size: 16px;
+	font-family: sans-serif;
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 5px;
+}
+
+a {
+	color: #000;
+	text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #222;
+		color: #fff;
+	}
+
+	a {
+		color: #fff;
+	}
+}
+
+header {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	margin-bottom: 25px;
+	border-bottom: 1px solid gray;
+	overflow-wrap: break-word;
+	word-break: break-all;
+	hyphens: auto;
+}
+
+header img {
+	max-height: 80px;
+}
+
+div#navbar {
+	text-align: right;
+}
+
+div#navbar a.logout {
+	display: inline-block;
+	white-space: nowrap;
+	border: 1px solid silver;
+	border-radius: 5px;
+	padding: 0;
+}
+
+div#navbar a.logout span {
+	margin: 0;
+	padding: 5px;
+	display: inline-block;
+}
+
+div#navbar a.logout span.logout {
+	color: #f00;
+}
+
+
+nav {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	gap: 10px;
+	align-items: center;
+	margin: 50px 0;
+}
+
+nav a {
+	display: block;
+	padding: 15px;
+	font-size: large;
+	border: 1px solid gray;
+	border-radius: 10px;
+	text-align: center;
+	flex-grow: 1;
+}
+
+nav a:hover {
+	background-color: #88888833;
+}
+
+
+input, select, button {
+	display: block;
+	padding: 4px;
+}
+
+select {
+	margin-right: -12px;
+}
+
+input[name] {
+	width: 100%;
+}
+
+input[required] {
+	border-right: 2px solid red;
+}
+
+button {
+	grid-column-start: 2;
+	min-width: 120py;
+	width: 20%;
+}
+
+#accounts {
+	display: grid;
+	grid-template-columns: repeat(4, auto);
+	column-gap: 10px;
+	row-gap: 15px;
+}
+
+#accounts .head {
+	font-weight: bold;
+	border-bottom: 1px solid gray;
+	text-align: center;
+}
+
+#accounts .no-data {
+	grid-column-end: span  4;
+	text-align: center;
+	padding: 15px;
+}
+
+form {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+	column-gap: 5px;
+	row-gap: 25px;
+	align-items: center;
+}
+
+form h3 {
+	grid-column-end: span 2;
+}

@@ -1,0 +1,46 @@
+---
+
+# LDAP based authentication handler for Leihs
+# Copyright 2022 ELAN e.V.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+invalid_token:
+  title: Ungültiger Token
+  message: |
+    Die Anfrage enthält einen ungültigen Token.
+    Falls sie von Leihs weitergeleitet wurden,
+    berichten Sie dies bitte Ihrem Administrator.
+no_token:
+  title: Fehlender Token
+  message: |
+    Die Anfrage enthält keinen Token zur Identifizierung des Nutzers.
+    Bitte kehren Sie zu Leihs zurück und melden Sie sich erneut an.
+expired_token:
+  title: Abgelaufener Token
+  message: |
+    Ihr Anmeldeversuch hat zu lange gedauert.
+    Der von Leihs bereitgestellte Token ist abgelaufen.
+    Bitte kehren Sie zu Leihs zurück und melden Sie sich erneut an.
+invalid_credentials:
+  title: Ungültige Zugangsdaten
+  message: |
+    Ihr Nutzername oder Passwort scheint nicht korrekt zu sein.
+    Bitte versuchen Sie es erneut.
+internal:
+  title: Fehler
+  message: |
+    Ein interner Fehler ist aufgetreten.
+    Dies hätte nicht passieren sollen.
+    Bitte berichten Sie dies Ihrem Administrator.

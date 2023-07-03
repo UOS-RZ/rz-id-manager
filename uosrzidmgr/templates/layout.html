@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Login</title>
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		<link type=text/css rel=stylesheet href={{ url_for('static', filename='style.css') }} />
+		<script type=application/javascript src={{ url_for('static', filename='func.js') }}></script>
+	</head>
+	<body>
+		<div id=navbar>
+			{% if user %}
+			<a role=button href=/logout class=logout>
+				<span class=user>{{ user }}</span>
+				|
+				{{ organizational_unit }}
+				|
+				<span class=logout>Logout</span>
+			</a>
+			{% endif %}
+		</div>
+		<header>
+			<a href=/><img src="{{ url_for('static', filename='logo.jpg') }}" /></a>
+			<h1>{{ i18n.user_management }}</h1>
+		</header>
+		{% block body %}{% endblock %}
+	</body>
+</html>

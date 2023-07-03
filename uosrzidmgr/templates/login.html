@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>{{ i18n.login }}</h2>
+<form action="/" method="POST">
+	<label for=login>{{ i18n.login }}</label>
+	<input type="text" name="user" placeholder="{{ i18n.username }}" autofocus />
+	<label for=password>{{ i18n.password }}</label>
+	<input type="password" name="password" placeholder="{{ i18n.password }}" />
+
+	<button type=submit>{{ i18n.login }}</button>
+</form>
+{% endblock %}

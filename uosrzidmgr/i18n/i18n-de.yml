@@ -1,0 +1,65 @@
+---
+
+# LDAP based authentication handler for Leihs
+# Copyright 2022 ELAN e.V.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+login: Login
+username: Nutzername
+password: Passwort
+back: Zurück
+service_account:
+  header: Funktionskennung anlegen
+  login: Login
+  password: Passwort
+  create: Account anlegen
+user_account:
+  header: Nutzerkennung anlegen
+  login: Login
+  password: Passwort
+  account_type:
+    title: Accounttyp
+    staff: Bedienstete:r
+    guest: Gast
+  person:
+    header: Persönlöiche Informationen
+    gender:
+      title: Geschlecht
+      male: männlich
+      female: weiblich
+      diverse: divers
+      not_specified: Keine Angaben
+    name:
+      given: Vorname
+      family: nachname
+      title: Titel
+    birthday: Geburtstag
+  address:
+    work: Geschäftliche Kontaktdaten
+    private: Proivate Kontaktdaten
+    street: Straße
+    street_no: Nummer
+    post_code: Postleitzahl
+    city: Stadt
+    phone: Telefon
+    email: E-Mail
+user_invite:
+  header: Nutzereilandung erstellen
+invitation:
+  header: Einladung
+  description: |
+    Eine Nutzereinladung wurde erstellt.
+    Bitte kopieren Sie den folgenden Link
+    und lassen Sie den Nutzer das Formular vervollständigen.
