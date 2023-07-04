@@ -16,7 +16,7 @@
 
 import argparse
 
-from uosrzidmgr.config import update_configuration
+from uosrzidmgr.config import update_configuration, config
 
 
 if __name__ == '__main__':
@@ -30,6 +30,12 @@ if __name__ == '__main__':
         default=None,
         help='Path to a configuration file'
     )
+    parser.add_argument(
+        '-d', '--debug',
+        default=False,
+        action='store_true',
+        help='Start web server in debug mode'
+    )
     args = parser.parse_args()
     if args.config:
         update_configuration(args.config)
@@ -37,4 +43,5 @@ if __name__ == '__main__':
     # Since `app` will use the configuration,
     # load it only after we updated the configuration location
     from uosrzidmgr.web import app
-    app.run()
+
+    app.run(debug=args.debug)
