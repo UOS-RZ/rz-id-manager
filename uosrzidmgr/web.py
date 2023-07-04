@@ -184,11 +184,19 @@ def service_account_form(user_data):
 def service_account_create(db, user_data):
     now = datetime.now()
 
+    login = request.form.get('login')
+    if check_login(login):
+        raise RuntimeError('User with given username already exists')
+
+    management_login = request.form.get('management_login')
+    if not check_login(management_login):
+        raise RuntimeError('Management login does not exist.')
+
     account = Account()
-    account.login = request.form.get('login')
+    account.login = login
     account.password = request.form.get('password')
     account.organizational_unit = user_data['organizational_unit']
-    account.management_login = request.form.get('management_login')
+    account.management_login = management_login
     account.requested = now
     account.created = now
     account.status = Status.created
