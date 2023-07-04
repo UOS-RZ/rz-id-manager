@@ -26,7 +26,7 @@ from functools import wraps
 from ldap3.core.exceptions import LDAPBindError, LDAPPasswordIsMandatoryError
 
 from uosrzidmgr.config import config
-from uosrzidmgr.ldap import ldap_login, check_login
+from uosrzidmgr.ldap import ldap_login, check_login, check_for_user
 from uosrzidmgr.db import with_session, Account, Status, AccountType
 
 # Logger
@@ -204,7 +204,7 @@ def service_account_create(db, user_data):
 @verify_login
 @with_session
 def user_account_form(db, user_data):
-    return render_template('create_user_account.html', **user_data)
+    return render_template('user_account_create_form.html', **user_data)
 
 
 
@@ -216,13 +216,27 @@ def user_account_create(db, user_data):
     user = user_data['user']
     now = datetime.now()
 
+    login = request.form.get('login')
+    if check_login(login):
+        raise RuntimeError('User with given username already exists')
+
+    existing_account = request.form.get('existing_account').strip() or None
+    name_given = request.form.get('name_given')
+    name_family = request.form.get('name_family')
+    birthday = parse(request.form.get('birthday'))
+    birthday_numerical = birthday.strftime('%Y%m%d')
+
+    request_only = bool(
+            existing_account
+            or check_for_user(name_given, name_family, birthday_numerical))
+    logger.debug('Account creation needs to be approved: %s', request_only)
+
     account = Account()
-    account.login = request.form.get('login')
+    account.existing_account = existing_account
+    account.login = login
     account.password = request.form.get('password')
     account.organizational_unit = user_data['organizational_unit']
     account.requested = now
-    account.created = now
-    account.status = Status.created
     account.account_type = AccountType[request.form.get('account_type')]
     account.gender = request.form.get('gender')
     account.name_given = request.form.get('name_given')
@@ -240,10 +254,21 @@ def user_account_create(db, user_data):
     account.private_city = request.form.get('private_city')
     account.private_email = request.form.get('private_email')
     account.private_phone = request.form.get('private_phone')
+
+    if request_only:
+        account.status = Status.requested
+    else:
+        account.created = now
+        account.status = Status.created
     db.add(account)
     db.commit()
 
-    return redirect('/', code=302)
+    if not request_only:
+        logger.warn('TODO: Create account in LDAP')
+
+    return render_template('user_account_createed.html',
+                           created=not request_only,
+                           **user_data)
 
 
 @app.route('/invite_user', methods=['GET'])
@@ -251,7 +276,7 @@ def user_account_create(db, user_data):
 @verify_login
 @with_session
 def invite_user_form(db, user_data):
-    return render_template('create_user_invite.html', **user_data)
+    return render_template('user_account_invite_form.html', **user_data)
 
 
 @app.route('/invite_user', methods=['POST'])

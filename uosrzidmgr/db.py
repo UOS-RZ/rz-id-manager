@@ -41,12 +41,14 @@ Base = declarative_base()
 
 
 class Status(enum.Enum):
+    requested = 0
     created = 1
     invited = 2
     timeout = 3
     cancelled = 4
 
 class Gender(enum.Enum):
+    not_specified = 0
     male = 1
     female = 2
     diverse = 3
@@ -64,6 +66,7 @@ class Account(Base):
     __tablename__ = 'account'
     login = Column(String, primary_key=True)
     '''LDAP login'''
+    existing_account = Column(String)
     requested = Column(DateTime, nullable=False)
     created = Column(DateTime)
     status = Column(Enum(Status))

@@ -15,7 +15,7 @@
 	{%- for user in users %}
 	<div>{{ user.requested }}</div>
 	<div>{{ user.login }}</div>
-	<div>{{ user.status }}</div>
+	<div>{{ user.status.name }}</div>
 	<div></div>
 	{% else %}
 	<div class=no-data>No account requests.</div>

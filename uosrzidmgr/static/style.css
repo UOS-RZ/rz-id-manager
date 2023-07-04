@@ -43,6 +43,10 @@ div#navbar {
 	text-align: right;
 }
 
+div#navbar a {
+	margin: 0;
+}
+
 div#navbar a.logout {
 	display: inline-block;
 	white-space: nowrap;
@@ -68,10 +72,11 @@ nav {
 	justify-content: space-around;
 	gap: 10px;
 	align-items: center;
-	margin: 50px 0;
+	margin: 30px 0;
 }
 
-nav a {
+a[role="button"] {
+	margin: 20px 0;
 	display: block;
 	padding: 15px;
 	font-size: large;
@@ -81,7 +86,7 @@ nav a {
 	flex-grow: 1;
 }
 
-nav a:hover {
+a[role="button"]:hover {
 	background-color: #88888833;
 }
 

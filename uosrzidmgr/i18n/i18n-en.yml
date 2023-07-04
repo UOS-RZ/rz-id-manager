@@ -30,13 +30,23 @@ service_account:
   create: Create account
 user_account:
   header: Create user account
-  login: Login
-  password: Password
-  password_confirm: Password (confirm)
-  account_type:
-    title: Account type
-    staff: Staff
-    guest: Guest
+  existing_account:
+    header: Previous account
+    description: >
+      If the user had an account in the past,
+      e.g. because of a previous work relationship,
+      the old account may be revived.
+      Leave these fields empty if unsure.
+    login: Old login
+  account_data:
+    header: Account data
+    login: Login
+    password: Password
+    password_confirm: Password (confirm)
+    account_type:
+      title: Account type
+      staff: Staff
+      guest: Guest
   person:
     header: Personal information
     gender:

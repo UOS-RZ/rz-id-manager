@@ -2,18 +2,6 @@
 {% block body %}
 <h2>{{ i18n.user_account.header }}</h2>
 <form id=user_account action="/user_account" method="POST">
-	<label for=login>{{ i18n.user_account.login }}</label>
-	<input type="text" name=login placeholder="{{ i18n.user_account.login }}" autofocus required />
-	<label for=password>{{ i18n.user_account.password }}</label>
-	<input type=password name=password placeholder="{{ i18n.user_account.password }}" required />
-	<label for=password_confirm>{{ i18n.user_account.password_confirm }}</label>
-	<input type=password name=password_confirm placeholder="{{ i18n.user_account.password_confirm }}" required />
-	<label for=account_type>{{ i18n.user_account.account_type.title }}</label>
-	<select name=account_type>
-		<option value=staff>{{ i18n.user_account.account_type.staff }}</option>
-		<option value=guest>{{ i18n.user_account.account_type.guest }}</option>
-	</select>
-
 	<h3>{{ i18n.user_account.person.header }}</h3>
 
 	<label for=gender>{{ i18n.user_account.person.gender.title }}</label>
@@ -58,10 +46,34 @@
 	<label for=private_email>{{ i18n.user_account.address.email }}</label>
 	<input type="text" name=private_email placeholder="{{ i18n.user_account.address.email }}" required />
 
+	<h3>{{ i18n.user_account.existing_account.header }}</h3>
+
+	<label for=existing_account>{{ i18n.user_account.existing_account.login }}</label>
+	<input type="text" name=existing_account placeholder="{{ i18n.user_account.existing_account.login }}" />
+	<div></div>
+	<div>{{ i18n.user_account.existing_account.description }}</div>
+
+	<h3>{{ i18n.user_account.account_data.header }}</h3>
+
+	<label for=login>{{ i18n.user_account.account_data.login }}</label>
+	<input type="text" name=login placeholder="{{ i18n.user_account.account_data.login }}" required />
+	<label for=password>{{ i18n.user_account.account_data.password }}</label>
+	<input type=password name=password placeholder="{{ i18n.user_account.account_data.password }}" required />
+	<label for=password_confirm>{{ i18n.user_account.account_data.password_confirm }}</label>
+	<input type=password name=password_confirm placeholder="{{ i18n.user_account.account_data.password_confirm }}" required />
+	<label for=account_type>{{ i18n.user_account.account_data.account_type.title }}</label>
+	<select name=account_type>
+		<option value=staff>{{ i18n.user_account.account_data.account_type.staff }}</option>
+		<option value=guest>{{ i18n.user_account.account_data.account_type.guest }}</option>
+	</select>
+
 	<h3>{{ i18n.user_account.agb.header }}</h3>
 	<div></div>
 	<div>{{ i18n.user_account.agb.admin }}</div>
 
 	<button type=submit>{{ i18n.service_account.create }}</button>
+
+	<div></div>
+	<i>Fields marked red are required.</i>
 </form>
 {% endblock %}
