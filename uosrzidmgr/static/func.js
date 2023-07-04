@@ -13,6 +13,21 @@ function validateLogin() {
 }
 
 
+function validateManagementLogin() {
+	const management_login = document.querySelector('input[name=management_login]')
+	if (management_login.value.length < 2) {
+		management_login.setCustomValidity('Login too short')
+		return;
+	}
+	fetch('/api/exists/' + management_login.value)
+	.then(response => response.json())
+	.then(exists => {
+		console.debug(`Login does exists: ${exists}`)
+		management_login.setCustomValidity(exists ? '' : 'User does not exists')
+	})
+}
+
+
 function verifyAndSetSuggestion(given, family, len) {
 	given += Math.random().toString(36).substr(10);
 	const suggestion = given.substr(0, len) + family;
@@ -61,6 +76,10 @@ addEventListener("DOMContentLoaded", (event) => {
 	// Check that login does not already exist
 	const login = document.querySelector('input[name=login]')
 	login?.addEventListener('keyup', validateLogin)
+
+	// Check that the management login exists
+	const management_login = document.querySelector('input[name=management_login]')
+	management_login?.addEventListener('keyup', validateManagementLogin)
 
 	// Suggest login name
 	const given = document.querySelector('input[name=name_given]')
