@@ -41,6 +41,7 @@ function verifyAndSetSuggestion(given, family, len) {
 			const login = document.querySelector('input[name=login]')
 			console.debug(`Suggesting login ${suggestion}`)
 			login.value = suggestion
+			validateLogin()
 		}
 	})
 }
@@ -87,5 +88,11 @@ addEventListener("DOMContentLoaded", (event) => {
 	if (given && family) {
 		given.onchange = suggestLogin;
 		family.onchange = suggestLogin;
+	}
+
+	// Complete invite URL
+	const invite_link = document.getElementById('invite_link')
+	if (invite_link) {
+		invite_link.innerText = window.location.origin + invite_link.getAttribute('data-link')
 	}
 });

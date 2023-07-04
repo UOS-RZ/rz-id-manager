@@ -96,14 +96,11 @@ a[role="button"]:hover, button:hover {
 input, select {
 	display: block;
 	padding: 4px;
+	width: 100%;
 }
 
 select {
 	margin-right: -12px;
-}
-
-input[name] {
-	width: 100%;
 }
 
 input[required] {
@@ -146,4 +143,11 @@ form {
 
 form h3 {
 	grid-column-end: span 2;
+}
+
+pre {
+	font-size: smaller;
+	padding: 15px;
+	border: 1px dashed silver;
+	border-radius: 10px;
 }

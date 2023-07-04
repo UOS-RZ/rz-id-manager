@@ -288,9 +288,10 @@ def invite_user_form(db, user_data):
 
 
 @app.route('/invite_user', methods=['POST'])
-@with_session
 @handle_errors
-def user_invite_create(db):
+@verify_login
+@with_session
+def user_invite_create(db, user_data):
     i18n = __i18n[request.accept_languages.best_match(__languages)]
     user = session.get('login')[0]
     ou = organizational_unit(user)
@@ -316,8 +317,8 @@ def user_invite_create(db):
 
     invitation_link = f'/invite/{invitation_key}'
 
-    return render_template('user_invite.html', i18n=i18n, user=user,
-                           invitation_link=invitation_link)
+    return render_template('user_account_invite_created.html',
+                           invitation_link=invitation_link, **user_data)
 
 
 @app.route('/logout')

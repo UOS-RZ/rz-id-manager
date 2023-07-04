@@ -4,10 +4,8 @@
 <p>
 	{{ i18n.invitation.description }}
 </p>
-<p>
-	<input type=text value="{{ invitation_link }}" />
-</p>
-<p>
-	<a href=/>← {{ i18n.back }}</a>
-</p>
+<pre id=invite_link data-link="{{ invitation_link }}">
+</pre>
+
+<a role=button href=/>← {{ i18n.back }}</a>
 {% endblock %}
