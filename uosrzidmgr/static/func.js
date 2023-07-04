@@ -47,8 +47,8 @@ function verifyAndSetSuggestion(given, family, len) {
 
 
 function suggestLogin() {
-	const given = document.querySelector('input[name=name_given]').value.toLowerCase()
-	const family = document.querySelector('input[name=name_family]').value.toLowerCase()
+	const given = document.querySelector('input[name=name_given]').value.toLowerCase().replace(/[^a-z]/g, '')
+	const family = document.querySelector('input[name=name_family]').value.toLowerCase().replace(/[^a-z]/g, '')
 	if (given && family) {
 		verifyAndSetSuggestion(given, family, 1)
 	}
