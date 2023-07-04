@@ -2,14 +2,6 @@
 {% block body %}
 <h2>{{ i18n.user_invite.header }}</h2>
 <form id=user_account action="/invite_user" method="POST">
-	<label for=login>{{ i18n.user_account.login }}</label>
-	<input type="text" name=login placeholder="{{ i18n.user_account.login }}" autofocus required />
-	<label for=account_type>{{ i18n.user_account.account_type.title }}</label>
-	<select name=account_type>
-		<option value=staff>{{ i18n.user_account.account_type.staff }}</option>
-		<option value=guest>{{ i18n.user_account.account_type.guest }}</option>
-	</select>
-
 	<h3>{{ i18n.user_account.person.header }}</h3>
 
 	<label for=name_given>{{ i18n.user_account.person.name.given }}</label>
@@ -28,6 +20,16 @@
 	<input type="text" name=work_city placeholder="{{ i18n.user_account.address.city }}" />
 	<label for=work_phone>{{ i18n.user_account.address.phone }}</label>
 	<input type=tel name=work_phone placeholder="{{ i18n.user_account.address.phone }}" />
+
+	<h3>{{ i18n.user_account.account_data.header }}</h3>
+
+	<label for=login>{{ i18n.user_account.account_data.login }}</label>
+	<input type="text" name=login placeholder="{{ i18n.user_account.account_data.login }}" autofocus required />
+	<label for=account_type>{{ i18n.user_account.account_data.account_type.title }}</label>
+	<select name=account_type>
+		<option value=staff>{{ i18n.user_account.account_data.account_type.staff }}</option>
+		<option value=guest>{{ i18n.user_account.account_data.account_type.guest }}</option>
+	</select>
 
 	<button type=submit>{{ i18n.service_account.create }}</button>
 </form>
