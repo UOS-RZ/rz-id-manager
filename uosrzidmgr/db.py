@@ -89,7 +89,7 @@ class Account(Base):
     private_city = Column(String)
     private_email = Column(String)
     private_phone = Column(String)
-    invitation_key = Column(String)
+    invitation_key = Column(String, nullable=True, unique=True)
 
 
 

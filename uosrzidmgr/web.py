@@ -321,6 +321,18 @@ def user_invite_create(db, user_data):
                            invitation_link=invitation_link, **user_data)
 
 
+@app.route('/invite/<invitation_key>', methods=['GET'])
+@handle_errors
+@with_session
+def invite_user_accept_form(db, invitation_key):
+    i18n = __i18n[request.accept_languages.best_match(__languages) or 'en']
+    account = db.query(Account)\
+            .where(Account.invitation_key == invitation_key)\
+            .one()
+    return render_template('user_account_invite_accept_form.html', i18n=i18n,
+                           account=account)
+
+
 @app.route('/logout')
 def logout():
     session.clear()

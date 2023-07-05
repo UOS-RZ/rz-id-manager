@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>{{ i18n.user_account.header }}</h2>
+<form id=user_account action="/user_account" method="POST">
+	<h3>{{ i18n.user_account.person.header }}</h3>
+
+	<label for=gender>{{ i18n.user_account.person.gender.title }}</label>
+	<select name=gender>
+		<option value=male>{{ i18n.user_account.person.gender.male }}</option>
+		<option value=female>{{ i18n.user_account.person.gender.female }}</option>
+		<option value=diverse>{{ i18n.user_account.person.gender.diverse }}</option>
+		<option value=not_specified selected>{{ i18n.user_account.person.gender.not_specified }}</option>
+	</select>
+	<label for=name_given>{{ i18n.user_account.person.name.given }}</label>
+	<input type="text" name="name_given" placeholder="{{ i18n.user_account.person.name.given }}" value="{{ account.name_given }}" required />
+	<label for=name_family>{{ i18n.user_account.person.name.family }}</label>
+	<input type="text" name="name_family" placeholder="{{ i18n.user_account.person.name.family }}" value="{{ account.name_family }}" required />
+	<label for=title>{{ i18n.user_account.person.name.title }}</label>
+	<input type="text" name="title" placeholder="{{ i18n.user_account.person.name.title }}" />
+	<label for=birthday>{{ i18n.user_account.person.birthday }}</label>
+	<input type="date" name="birthday" required />
+
+	<h3>{{ i18n.user_account.address.work }}</h3>
+	<label for=work_street>{{ i18n.user_account.address.street }}</label>
+	<input type="text" name=work_street placeholder="{{ i18n.user_account.address.street }}" value="{{ account.work_street }}" required />
+	<label for=work_street_no>{{ i18n.user_account.address.street_no }}</label>
+	<input type="number" name=work_street_no value="{{ account.work_street_no }}" required />
+	<label for=work_post_code>{{ i18n.user_account.address.post_code }}</label>
+	<input type="number" name=work_post_code value="{{ account.work_post_code }}" required />
+	<label for=work_city>{{ i18n.user_account.address.city }}</label>
+	<input type="text" name=work_city placeholder="{{ i18n.user_account.address.city }}" value="{{ account.work_city }}" required />
+	<label for=work_phone>{{ i18n.user_account.address.phone }}</label>
+	<input type=tel name=work_phone placeholder="{{ i18n.user_account.address.phone }}" value="{{ account.work_phone }}" />
+
+	<h3>{{ i18n.user_account.address.private }}</h3>
+	<label for=private_street>{{ i18n.user_account.address.street }}</label>
+	<input type="text" name=private_street placeholder="{{ i18n.user_account.address.street }}" required />
+	<label for=private_street_no>{{ i18n.user_account.address.street_no }}</label>
+	<input type="number" name=private_street_no required />
+	<label for=private_post_code>{{ i18n.user_account.address.post_code }}</label>
+	<input type="number" name=private_post_code required />
+	<label for=private_city>{{ i18n.user_account.address.city }}</label>
+	<input type="text" name=private_city placeholder="{{ i18n.user_account.address.city }}" required />
+	<label for=private_phone>{{ i18n.user_account.address.phone }}</label>
+	<input type="tel" name=private_phone placeholder="{{ i18n.user_account.address.phone }}" />
+	<label for=private_email>{{ i18n.user_account.address.email }}</label>
+	<input type="text" name=private_email placeholder="{{ i18n.user_account.address.email }}" required />
+
+	<h3>{{ i18n.user_account.existing_account.header }}</h3>
+
+	<label for=existing_account>{{ i18n.user_account.existing_account.login }}</label>
+	<input type="text" name=existing_account placeholder="{{ i18n.user_account.existing_account.login }}" />
+	<div></div>
+	<div>{{ i18n.user_account.existing_account.description }}</div>
+
+	<h3>{{ i18n.user_account.account_data.header }}</h3>
+
+	<label for=login>{{ i18n.user_account.account_data.login }}</label>
+	<input type="text" name=login value="{{ account.login }}" readonly />
+	<label for=organizational_unit>{{ i18n.user_account.account_data.organizational_unit }}</label>
+	<input type="text" name=account_type value="{{ account.organizational_unit }}" readonly />
+	<label for=account_type>{{ i18n.user_account.account_data.account_type.title }}</label>
+	<input type="text" name=account_type value="{{ account.account_type.name }}" readonly />
+	<label for=password>{{ i18n.user_account.account_data.password }}</label>
+	<input type=password name=password placeholder="{{ i18n.user_account.account_data.password }}" required />
+	<label for=password_confirm>{{ i18n.user_account.account_data.password_confirm }}</label>
+	<input type=password name=password_confirm placeholder="{{ i18n.user_account.account_data.password_confirm }}" required />
+
+	<h3>{{ i18n.user_account.agb.header }}</h3>
+	<div></div>
+	<div>{{ i18n.user_account.agb.admin }}</div>
+
+	<button type=submit>{{ i18n.service_account.create }}</button>
+
+	<div></div>
+	<i>Fields marked red are required.</i>
+</form>
+{% endblock %}
