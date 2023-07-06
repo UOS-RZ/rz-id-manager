@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
 <h2>{{ i18n.user_account.header }}</h2>
-<form id=user_account action="/user_account" method="POST">
+<form id=user_account action="/user_account_invite" method="POST">
+	<input type=hidden name=invitation_key value="{{ invitation_key }}" />
+
 	<h3>{{ i18n.user_account.person.header }}</h3>
 
 	<label for=gender>{{ i18n.user_account.person.gender.title }}</label>
@@ -68,7 +70,7 @@
 
 	<h3>{{ i18n.user_account.agb.header }}</h3>
 	<div></div>
-	<div>{{ i18n.user_account.agb.admin }}</div>
+	<div>{{ i18n.user_account.agb.user }}</div>
 
 	<button type=submit>{{ i18n.service_account.create }}</button>
 

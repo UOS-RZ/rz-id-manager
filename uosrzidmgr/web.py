@@ -330,7 +330,63 @@ def invite_user_accept_form(db, invitation_key):
             .where(Account.invitation_key == invitation_key)\
             .one()
     return render_template('user_account_invite_accept_form.html', i18n=i18n,
-                           account=account)
+                           account=account, invitation_key=invitation_key)
+
+
+@app.route('/user_account_invite', methods=['POST'])
+@with_session
+@handle_errors
+def user_account_create_from_invite(db):
+    i18n = __i18n[request.accept_languages.best_match(__languages) or 'en']
+    now = datetime.now()
+
+    invitation_key = request.form.get('invitation_key')
+    account = db.query(Account)\
+            .where(Account.invitation_key == invitation_key)\
+            .one()
+
+    existing_account = request.form.get('existing_account').strip() or None
+    name_given = request.form.get('name_given')
+    name_family = request.form.get('name_family')
+    birthday = parse(request.form.get('birthday'))
+    birthday_numerical = birthday.strftime('%Y%m%d')
+
+    request_only = bool(
+            existing_account 
+            or check_for_user(name_given, name_family, birthday_numerical))
+    logger.debug('Account creation needs to be approved: %s', request_only)
+
+    account.password = request.form.get('password')
+    account.existing_account = existing_account
+    account.gender = request.form.get('gender')
+    account.name_given = request.form.get('name_given')
+    account.name_family = request.form.get('name_family')
+    account.title = request.form.get('title')
+    account.birthday = parse(request.form.get('birthday'))
+    account.work_street = request.form.get('work_street')
+    account.work_street_no = request.form.get('work_street_no')
+    account.work_post_code = request.form.get('work_post_code')
+    account.work_city = request.form.get('work_city')
+    account.work_phone = request.form.get('work_phone')
+    account.private_street = request.form.get('private_street')
+    account.private_street_no = request.form.get('private_street_no')
+    account.private_post_code = request.form.get('private_post_code')
+    account.private_city = request.form.get('private_city')
+    account.private_email = request.form.get('private_email')
+    account.private_phone = request.form.get('private_phone')
+
+    if request_only:
+        account.status = Status.requested
+    else:
+        account.created = now
+        account.status = Status.created
+    db.commit()
+
+    if not request_only:
+        logger.warn('TODO: Create account in LDAP')
+
+    return render_template('user_account_createed.html', i18n=i18n,
+                           created=not request_only)
 
 
 @app.route('/logout')

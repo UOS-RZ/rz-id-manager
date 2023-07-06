@@ -8,14 +8,16 @@ A user account has been created.
 {% else %}
 <p>
 A potential conflict between user accounts has been detected.
-The creation request has been submitted to the data center.
+The creation request has been submitted to the data center for review.
 The request will be checked and the account will be created.
 </p>
 <p>
-You and the user will be notified.
+You will be notified once the request has been processen.
 </p>
 {% endif %}
 
+{% if user %}
 <a href=/ role=button>Go back</a>
+{% endif %}
 
 {% endblock %}
