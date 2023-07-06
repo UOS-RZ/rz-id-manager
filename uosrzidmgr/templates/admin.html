@@ -1,12 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<nav id=actions>
-	<a role=button href=/service_account>{{ i18n.service_account.header }}</a>
-	<a role=button href=/user_account>{{ i18n.user_account.header }}</a>
-	<a role=button href=/invite_user>{{ i18n.user_invite.header }}</a>
-</nav>
-
-<main id=accounts> 
+<main class=accounts id=all-accounts>
 	<div class=head>Date</div>
 	<div class=head>ID</div>
 	<div class=head>Org</div>

@@ -107,19 +107,23 @@ button {
 	*/
 }
 
-#accounts {
+.accounts {
 	display: grid;
 	grid-template-columns: repeat(4, auto);
 	column-gap: 10px;
 	row-gap: 15px;
 }
 
-#accounts .head {
+#all-accounts {
+	grid-template-columns: repeat(5, auto);
+}
+
+.accounts .head {
 	font-weight: bold;
 	border-bottom: 1px solid gray;
 }
 
-#accounts .no-data {
+.accounts .no-data {
 	grid-column-end: span  4;
 	text-align: center;
 	padding: 15px;
