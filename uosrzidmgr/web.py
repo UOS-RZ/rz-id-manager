@@ -18,6 +18,8 @@ import glob
 import logging
 import os
 import yaml
+import random
+import string
 
 from datetime import datetime
 from dateutil.parser import parse
@@ -310,7 +312,7 @@ def user_invite_create(db, user_data):
     user = session.get('login')[0]
     ou = organizational_unit(user)
     now = datetime.now()
-    invitation_key = 'oYS1wcFvO93G9enIkB97mLMqAjkqfvglUtWBdLL4rJSlqmMe'
+    invitation_key = ''.join(random.choices(string.ascii_letters, k=64))
 
     account = Account()
     account.login = request.form.get('login')
