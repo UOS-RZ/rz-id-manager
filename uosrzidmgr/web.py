@@ -335,6 +335,24 @@ def user_invite_create(db, user_data):
                            invitation_link=invitation_link, **user_data)
 
 
+@app.route('/invite_link/<login>', methods=['GET'])
+@handle_errors
+@verify_login
+@with_session
+def user_invite_link(db, user_data, login):
+    account = db.query(Account)\
+            .where(Account.login == login)\
+            .one()
+    ou = user_data['organizational_unit']
+    if not user_data['super_admin'] and account.organizational_unit != ou:
+        raise Exception('Only access accounts from your organizational unit')
+
+    invitation_link = f'/invite/{account.invitation_key}'
+
+    return render_template('user_account_invite_created.html',
+                           invitation_link=invitation_link, **user_data)
+
+
 @app.route('/invite/<invitation_key>', methods=['GET'])
 @handle_errors
 @with_session

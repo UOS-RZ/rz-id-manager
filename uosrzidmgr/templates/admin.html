@@ -12,7 +12,11 @@
 	<div>{{ user.login }}</div>
 	<div>{{ user.login }}</div>
 	<div>{{ user.status.name }}</div>
-	<div></div>
+	<div>
+		{% if user.status.name == 'invited' %}
+		<a href="/invite_link/{{ user.login }}" class="material-symbols-outlined">share</a>
+		{% endif %}
+	</div>
 	{% else %}
 	<div class=no-data>No account requests.</div>
 	{% endfor %}
