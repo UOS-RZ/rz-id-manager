@@ -9,9 +9,11 @@
 	<body>
 		<div id=navbar>
 			{% if user %}
-				<span class=user>{{ user }}</span>
-				|
-				{{ organizational_unit }}
+			<span class=user>{{ user }}</span>
+			|
+			<a href=/>
+			{{ organizational_unit }}
+			</a>
 			{% endif %}
 			{% if super_admin %}
 			|

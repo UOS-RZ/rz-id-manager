@@ -39,6 +39,10 @@ header img {
 	max-height: 80px;
 }
 
+header h1 {
+	margin: 22px 0 0 0;
+}
+
 div#navbar {
 	text-align: right;
 }
@@ -52,6 +56,10 @@ div#navbar a.logout {
 	padding: 5px;
 	display: inline-block;
 	color: #f00;
+}
+
+div#navbar a:hover {
+	opacity: 0.7;
 }
 
 nav {
