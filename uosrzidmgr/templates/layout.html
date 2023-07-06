@@ -9,17 +9,24 @@
 	<body>
 		<div id=navbar>
 			{% if user %}
-			<a role=button href=/logout class=logout>
 				<span class=user>{{ user }}</span>
 				|
 				{{ organizational_unit }}
-				|
-				<span class=logout>Logout</span>
+			{% endif %}
+			{% if super_admin %}
+			|
+			<a href=/admin>
+			Admin
+			</a>
+			{% endif %}
+			{% if user %}
+			<a role=button href=/logout class=logout>
+				Logout
 			</a>
 			{% endif %}
 		</div>
 		<header>
-			<a href=/><img src="{{ url_for('static', filename='logo.jpg') }}" /></a>
+			<a href=/><img src="{{ url_for('static', filename='logo.png') }}" /></a>
 			<h1>{{ i18n.user_management }}</h1>
 		</header>
 		{% block body %}{% endblock %}

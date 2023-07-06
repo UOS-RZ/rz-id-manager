@@ -129,13 +129,15 @@ def verify_login(function):
             return render_template('login.html', i18n=i18n)
 
         ou = organizational_unit(user)
+        super_admin = user in (config('super_admins') or [])
 
         data = {'i18n': i18n,
                 'organizational_unit': ou,
                 'user': user,
                 'email': email,
                 'given': given,
-                'family': family}
+                'family': family,
+                'super_admin': super_admin}
         return function(*args, user_data=data, **kwargs)
     return wrapper
 
@@ -145,7 +147,8 @@ def verify_login(function):
 @verify_login
 @with_session
 def home(db, user_data):
-    users = db.query(Account)
+    ou = user_data['organizational_unit']
+    users = db.query(Account).where(Account.organizational_unit == ou)
     return render_template('index.html', users=users, **user_data)
 
 
@@ -168,6 +171,17 @@ def login():
     session['login'] = (user, email, given, family)
 
     return redirect('/', code=302)
+
+
+@app.route('/admin', methods=['GET'])
+@handle_errors
+@verify_login
+@with_session
+def admin(db, user_data):
+    if not user_data['super_admin']:
+        raise Exception()
+    users = db.query(Account)
+    return render_template('admin.html', users=users, **user_data)
 
 
 @app.route('/service_account', methods=['GET'])

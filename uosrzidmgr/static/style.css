@@ -43,25 +43,14 @@ div#navbar {
 	text-align: right;
 }
 
-div#navbar a {
-	margin: 0;
-}
-
 div#navbar a.logout {
-	display: inline-block;
 	white-space: nowrap;
 	border: 1px solid silver;
 	border-radius: 5px;
-	padding: 0;
-}
-
-div#navbar a.logout span {
 	margin: 0;
+	margin-left: 5px;
 	padding: 5px;
 	display: inline-block;
-}
-
-div#navbar a.logout span.logout {
 	color: #f00;
 }
 
