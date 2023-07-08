@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<main class=accounts id=all-accounts>
+<main class="grid grid-col-5">
 	<div class=head>Date</div>
 	<div class=head>ID</div>
 	<div class=head>Org</div>
@@ -10,11 +10,15 @@
 	{%- for user in users %}
 	<div>{{ user.requested }}</div>
 	<div>{{ user.login }}</div>
-	<div>{{ user.login }}</div>
+	<div>{{ user.organizational_unit }}</div>
 	<div>{{ user.status.name }}</div>
 	<div>
+		<a href="/info/{{ user.login }}" class="material-symbols-outlined">info</a>
 		{% if user.status.name == 'invited' %}
 		<a href="/invite_link/{{ user.login }}" class="material-symbols-outlined">share</a>
+		{% endif %}
+		{% if user.status.name == 'requested' %}
+		<a href="/check/{{ user.login }}" class="material-symbols-outlined">assignment_turned_in</a>
 		{% endif %}
 	</div>
 	{% else %}

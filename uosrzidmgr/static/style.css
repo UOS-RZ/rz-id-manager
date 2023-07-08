@@ -109,20 +109,27 @@ input[readonly] {
 
 button {
 	grid-column-start: 2;
-	/*
-	 * min-width: 120py;
-	width: 20%;
-	*/
 }
 
-.accounts {
+.grid {
 	display: grid;
-	grid-template-columns: repeat(4, auto);
 	column-gap: 10px;
 	row-gap: 15px;
 }
 
-#all-accounts {
+.grid-col-2 {
+	grid-template-columns: repeat(2, auto);
+}
+
+.grid-col-2 h3 {
+	grid-column-end: span 2;
+}
+
+.grid-col-4 {
+	grid-template-columns: repeat(4, auto);
+}
+
+.grid-col-5 {
 	grid-template-columns: repeat(5, auto);
 }
 

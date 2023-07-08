@@ -144,6 +144,14 @@ def verify_login(function):
     return wrapper
 
 
+def assert_org(user_data, account):
+    if user_data['super_admin']:
+        return
+    if account.organizational_unit == user_data['organizational_unit']:
+        return
+    raise Exception('You are not allowed to manage this account')
+
+
 @app.route('/', methods=['GET'])
 @handle_errors
 @verify_login
@@ -345,9 +353,7 @@ def user_invite_link(db, user_data, login):
     account = db.query(Account)\
             .where(Account.login == login)\
             .one()
-    ou = user_data['organizational_unit']
-    if not user_data['super_admin'] and account.organizational_unit != ou:
-        raise Exception('Only access accounts from your organizational unit')
+    assert_org(user_data, account)
 
     invitation_link = f'/invite/{account.invitation_key}'
 
@@ -386,7 +392,7 @@ def user_account_create_from_invite(db):
     birthday_numerical = birthday.strftime('%Y%m%d')
 
     request_only = bool(
-            existing_account 
+            existing_account
             or check_for_user(name_given, name_family, birthday_numerical))
     logger.debug('Account creation needs to be approved: %s', request_only)
 
@@ -421,6 +427,46 @@ def user_account_create_from_invite(db):
 
     return render_template('user_account_createed.html', i18n=i18n,
                            created=not request_only)
+
+
+@app.route('/info/<login>', methods=['GET'])
+@handle_errors
+@verify_login
+@with_session
+def account_info(db, user_data, login):
+    account = db.query(Account)\
+            .where(Account.login == login)\
+            .one()
+
+    assert_org(user_data, account)
+
+    return render_template('user_account_review.html', account=account,
+                           **user_data)
+
+
+@app.route('/check/<login>', methods=['GET'])
+@handle_errors
+@verify_login
+@with_session
+def check_request(db, user_data, login):
+    if not user_data['super_admin']:
+        raise Exception('Only super admins are allowed to accept requests')
+
+    account = db.query(Account)\
+            .where(Account.login == login)\
+            .one()
+
+    potential_conflicts = []
+    if account.existing_account:
+        potential_conflicts.append(account.existing_account)
+    potential_conflicts += check_for_user(account.name_given,
+                                          account.name_family,
+                                          account.birthday.strftime('%Y%m%d'))
+
+    return render_template('user_account_review.html', account=account,
+                           potential_conflicts=potential_conflicts,
+                           can_approve=True,
+                           **user_data)
 
 
 @app.route('/logout')

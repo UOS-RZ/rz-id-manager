@@ -6,7 +6,7 @@
 	<a role=button href=/invite_user>{{ i18n.user_invite.header }}</a>
 </nav>
 
-<main class=accounts>
+<main class="grid grid-col-4">
 	<div class=head>Date</div>
 	<div class=head>ID</div>
 	<div class=head>Status</div>
@@ -17,6 +17,7 @@
 	<div>{{ user.login }}</div>
 	<div>{{ user.status.name }}</div>
 	<div>
+		<a href="/info/{{ user.login }}" class="material-symbols-outlined">info</a>
 		{% if user.status.name == 'invited' %}
 		<a href="/invite_link/{{ user.login }}" class="material-symbols-outlined">share</a>
 		<!--<a href="/cancel/{{ user.login }}" class="material-symbols-outlined">cancel</a>-->

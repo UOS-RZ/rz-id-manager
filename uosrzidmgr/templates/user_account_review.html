@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>{{ i18n.invitation.header }}</h2>
+
+<h3>Potential old accounts</h3>
+
+{% if potential_conflicts %}
+<nav id=actions>
+	{% for user in potential_conflicts %}
+	<a role=button href=#>{{ user }}</a>
+	{% endfor %}
+</nav>
+{% endif %}
+
+<main class="grid grid-col-2">
+	<h3>{{ i18n.user_account.account_data.header }}</h3>
+
+	<span>{{ i18n.user_account.account_data.login }}</span>
+	<span>{{ account.login }}</span>
+	<span>{{ i18n.user_account.account_data.organizational_unit }}</span>
+	<span>{{ account.organizational_unit }}</span>
+	<span>{{ i18n.user_account.account_data.account_type.title }}</span>
+	<span>{{ i18n.user_account.account_data.account_type[account.account_type.name] }}</span>
+
+	<h3>{{ i18n.user_account.person.header }}</h3>
+
+	<span>{{ i18n.user_account.person.gender.title }}</span>
+	<span>{{ i18n.user_account.person.gender[account.gender.name] }}</span>
+	<span>{{ i18n.user_account.person.name.given }}</span>
+	<span>{{ account.name_given }}</span>
+	<span>{{ i18n.user_account.person.name.family }}</span>
+	<span>{{ account.name_family }}</span>
+	<span>{{ i18n.user_account.person.name.title }}</span>
+	<span>{{ account.title }}</span>
+	<span>{{ i18n.user_account.person.birthday }}</span>
+	<span>{{ account.birthday }}</span>
+
+	<h3>{{ i18n.user_account.address.private }}</h3>
+
+	<span>{{ i18n.user_account.address.street }}</span>
+	<span>{{ account.private_street }}</span>
+	<span>{{ i18n.user_account.address.street_no }}</span>
+	<span>{{ account.private_street_no }}</span>
+	<span>{{ i18n.user_account.address.post_code }}</span>
+	<span>{{ account.private_post_code }}</span>
+	<span>{{ i18n.user_account.address.city }}</span>
+	<span>{{ account.private_city }}</span>
+	<span>{{ i18n.user_account.address.phone }}</span>
+	<span>{{ account.private_phone }}</span>
+	<span>{{ i18n.user_account.address.email }}</span>
+	<span>{{ account.private_email }}</span>
+
+	<h3>{{ i18n.user_account.address.work }}</h3>
+
+	<span>{{ i18n.user_account.address.street }}</span>
+	<span>{{ account.work_street }}</span>
+	<span>{{ i18n.user_account.address.street_no }}</span>
+	<span>{{ account.work_street_no }}</span>
+	<span>{{ i18n.user_account.address.post_code }}</span>
+	<span>{{ account.work_post_code }}</span>
+	<span>{{ i18n.user_account.address.city }}</span>
+	<span>{{ account.work_city }}</span>
+	<span>{{ i18n.user_account.address.phone }}</span>
+	<span>{{ account.work_phone }}</span>
+</main>
+
+{% if can_approve %}
+<a role=button href="/approve/{{ account.login }}">{{ i18n.user_account.header }}</a>
+{% endif %}
+{% endblock %}
