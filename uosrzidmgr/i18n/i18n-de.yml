@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+user_management: Nutzermanagement
 login: Login
 username: Nutzername
 password: Passwort
@@ -25,14 +26,28 @@ service_account:
   login: Login
   password: Passwort
   create: Account anlegen
+  password_confirm: Passwort (bestätigen)
+  create: Account anlegen
 user_account:
   header: Nutzerkennung anlegen
-  login: Login
-  password: Passwort
-  account_type:
-    title: Accounttyp
-    staff: Bedienstete:r
-    guest: Gast
+  existing_account:
+    header: Vorheriger Account
+    description: >
+      Wenn in der Vergangenheit bereits ein Account existierte,
+      zum Beispiel aufgrund eines alten Arbeitsverhältnisses,
+      kann dieser möglicherweise wiederhergestellt werden.
+      Im Zweifel bitte leer lassen.
+    login: Alter Login
+  account_data:
+    header: Account-Daten
+    login: Login
+    organizational_unit: Organisationseinheit
+    password: Passwort
+    password_confirm: Passwort (bestätigen)
+    account_type:
+      title: Accounttyp
+      staff: Bedienstete:r
+      guest: Gast
   person:
     header: Persönlöiche Informationen
     gender:
@@ -55,6 +70,17 @@ user_account:
     city: Stadt
     phone: Telefon
     email: E-Mail
+  agb:
+    header: Nutzungsbedingungen
+    admin: |
+      Mit dem Abschicken dieses Formulars bestätige ich, dass der Nutzer
+      für den dieser Account angelegt werden soll über die Nutzungsbedingungen
+      für die digitalen Dienste der Universität Osnabrück informiert wurde
+      und dass dieser ihnen zustimmt.
+    user: |
+      Mit dem Abschicken dieses Formulars bestätige ich, dass ich mir mit den
+      Nutzungsbedingungen für die digitalen Dienste der Universität Osnabrück
+      vertraut bin und diesen zustimme.
 user_invite:
   header: Nutzereilandung erstellen
 invitation:
