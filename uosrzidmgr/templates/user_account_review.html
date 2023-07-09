@@ -2,9 +2,9 @@
 {% block body %}
 <h2>{{ i18n.invitation.header }}</h2>
 
+{% if potential_conflicts %}
 <h3>Potential old accounts</h3>
 
-{% if potential_conflicts %}
 <nav id=actions>
 	{% for user in potential_conflicts %}
 	<a role=button href=#>{{ user }}</a>

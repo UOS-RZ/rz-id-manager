@@ -92,6 +92,15 @@ class Account(Base):
     invitation_key = Column(String, nullable=True, unique=True)
 
 
+class Action(Base):
+    """ORM object for account actions.
+    """
+    __tablename__ = 'action'
+    login = Column(String, primary_key=True)
+    date = Column(DateTime, primary_key=True)
+    user = Column(String, nullable=False)
+    action = Column(Enum(Status), nullable=False)
+
 
 def with_session(f):
     """Wrapper for f to make a SQLAlchemy session present within the function

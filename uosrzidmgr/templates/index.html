@@ -20,7 +20,9 @@
 		<a href="/info/{{ user.login }}" class="material-symbols-outlined">info</a>
 		{% if user.status.name == 'invited' %}
 		<a href="/invite_link/{{ user.login }}" class="material-symbols-outlined">share</a>
-		<!--<a href="/cancel/{{ user.login }}" class="material-symbols-outlined">cancel</a>-->
+		{% endif %}
+		{% if user.status.name in ['invited', 'requested'] %}
+		<a href="/cancel/{{ user.login }}" class="material-symbols-outlined">cancel</a>
 		{% endif %}
 	</div>
 	{% else %}

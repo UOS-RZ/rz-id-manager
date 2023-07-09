@@ -85,7 +85,7 @@ def check_login(username: str) -> bool:
     return len(conn.entries) > 0
 
 
-def check_for_user(given: str, family: str, birth: int) -> bool:
+def check_for_user(given: str, family: str, birth: int) -> list:
     '''Check if a specified login already exists in LDAP.
 
     :param username: Username to check

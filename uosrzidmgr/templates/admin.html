@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
+
+<h2>Accounts</h2>
 <main class="grid grid-col-5">
 	<div class=head>Date</div>
 	<div class=head>ID</div>
@@ -20,9 +22,27 @@
 		{% if user.status.name == 'requested' %}
 		<a href="/check/{{ user.login }}" class="material-symbols-outlined">assignment_turned_in</a>
 		{% endif %}
+		{% if user.status.name in ['invited', 'requested'] %}
+		<a href="/cancel/{{ user.login }}" class="material-symbols-outlined">cancel</a>
+		{% endif %}
 	</div>
 	{% else %}
 	<div class=no-data>No account requests.</div>
+	{% endfor %}
+</main>
+
+<h2>Action log</h2>
+<main class="grid grid-col-4">
+	<div class=head>Date</div>
+	<div class=head>Login</div>
+	<div class=head>User</div>
+	<div class=head>Status</div>
+
+	{%- for action in actions %}
+	<div>{{ action.login }}</div>
+	<div>{{ action.date }}</div>
+	<div>{{ action.user }}</div>
+	<div>{{ action.action.name }}</div>
 	{% endfor %}
 </main>
 {% endblock %}

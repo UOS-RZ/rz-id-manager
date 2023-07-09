@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>Cancel account</h2>
+
+{% if account.status.name == 'invited' %}
+Are you sure you want to cancel the invitation?
+You can always create a new invitation later.
+{% elif account.status.name == 'requested' %}
+Are you sure you want to cancel the account request?
+You can always create a new request later.
+{% endif %}
+
+<form action=/cancel method=POST>
+	<h3>{{ i18n.user_account.account_data.header }}</h3>
+
+	<span>{{ i18n.user_account.account_data.login }}</span>
+	<span>{{ account.login }}</span>
+	<span>{{ i18n.user_account.account_data.organizational_unit }}</span>
+	<span>{{ account.organizational_unit }}</span>
+	<span>{{ i18n.user_account.person.name.given }}</span>
+	<span>{{ account.name_given }}</span>
+	<span>{{ i18n.user_account.person.name.family }}</span>
+	<span>{{ account.name_family }}</span>
+
+	<input type=hidden name=login value="{{ account.login }}" />
+	<button role=button class=red>Cancel</button>
+</form>
+
+{% endblock %}

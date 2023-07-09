@@ -29,7 +29,7 @@ from ldap3.core.exceptions import LDAPBindError, LDAPPasswordIsMandatoryError
 
 from uosrzidmgr.config import config
 from uosrzidmgr.ldap import ldap_login, check_login, check_for_user
-from uosrzidmgr.db import with_session, Account, Status, AccountType
+from uosrzidmgr.db import with_session, Account, Status, AccountType, Action
 
 # Logger
 logger = logging.getLogger(__name__)
@@ -191,7 +191,9 @@ def admin(db, user_data):
     if not user_data['super_admin']:
         raise Exception()
     users = db.query(Account)
-    return render_template('admin.html', users=users, **user_data)
+    actions = db.query(Action)
+    return render_template('admin.html', users=users, actions=actions,
+                           **user_data)
 
 
 @app.route('/service_account', methods=['GET'])
@@ -226,6 +228,13 @@ def service_account_create(db, user_data):
     account.status = Status.created
     account.account_type = AccountType.service
     db.add(account)
+
+    action = Action()
+    action.login = login
+    action.date = now
+    action.user = user_data['user']
+    action.action = Status.created
+    db.add(action)
     db.commit()
 
     return redirect('/', code=302)
@@ -287,11 +296,19 @@ def user_account_create(db, user_data):
     account.private_email = request.form.get('private_email')
     account.private_phone = request.form.get('private_phone')
 
+    action = Action()
+    action.login = login
+    action.date = now
+    action.user = user_data['user']
+
     if request_only:
         account.status = Status.requested
+        action.action = Status.requested
     else:
         account.created = now
         account.status = Status.created
+        action.action = Status.created
+    db.add(action)
     db.add(account)
     db.commit()
 
@@ -316,9 +333,7 @@ def invite_user_form(db, user_data):
 @verify_login
 @with_session
 def user_invite_create(db, user_data):
-    i18n = __i18n[request.accept_languages.best_match(__languages)]
-    user = session.get('login')[0]
-    ou = organizational_unit(user)
+    ou = user_data['organizational_unit']
     now = datetime.now()
     invitation_key = ''.join(random.choices(string.ascii_letters, k=64))
 
@@ -337,6 +352,13 @@ def user_invite_create(db, user_data):
     account.work_phone = request.form.get('work_phone')
     account.invitation_key = invitation_key
     db.add(account)
+
+    action = Action()
+    action.login = request.form.get('login')
+    action.date = now
+    action.user = user_data['user']
+    action.action = Status.invited
+    db.add(action)
     db.commit()
 
     invitation_link = f'/invite/{invitation_key}'
@@ -415,11 +437,19 @@ def user_account_create_from_invite(db):
     account.private_email = request.form.get('private_email')
     account.private_phone = request.form.get('private_phone')
 
+    action = Action()
+    action.login = account.login
+    action.date = now
+    action.user = account.login
+
     if request_only:
         account.status = Status.requested
+        action.action = Status.requested
     else:
         account.created = now
         account.status = Status.created
+        action.action = Status.created
+    db.add(action)
     db.commit()
 
     if not request_only:
@@ -440,7 +470,10 @@ def account_info(db, user_data, login):
 
     assert_org(user_data, account)
 
-    return render_template('user_account_review.html', account=account,
+    template = 'service_account_info.html' \
+            if account.account_type == AccountType.service \
+            else 'user_account_review.html'
+    return render_template(template, account=account,
                            **user_data)
 
 
@@ -467,6 +500,52 @@ def check_request(db, user_data, login):
                            potential_conflicts=potential_conflicts,
                            can_approve=True,
                            **user_data)
+
+
+@app.route('/cancel/<login>', methods=['GET'])
+@handle_errors
+@verify_login
+@with_session
+def cancel_form(db, user_data, login):
+    account = db.query(Account)\
+            .where(Account.login == login)\
+            .one()
+
+    assert_org(user_data, account)
+
+    if account.status not in [Status.invited, Status.requested]:
+        raise Exception('Cannot cancel accounts in status %s', account.status)
+
+    return render_template('user_account_cancel_confirm.html', account=account,
+                           **user_data)
+
+
+@app.route('/cancel', methods=['POST'])
+@handle_errors
+@verify_login
+@with_session
+def cancel(db, user_data):
+    login = request.form.get('login')
+    account = db.query(Account)\
+            .where(Account.login == login)\
+            .one()
+
+    assert_org(user_data, account)
+
+    if account.status not in [Status.invited, Status.requested]:
+        raise Exception('Cannot cancel accounts in status %s', account.status)
+
+    account.status = Status.cancelled
+
+    action = Action()
+    action.login = login
+    action.date = datetime.now()
+    action.user = user_data['user']
+    action.action = Status.cancelled
+    db.add(action)
+    db.commit()
+
+    return redirect('/', code=302)
 
 
 @app.route('/logout')

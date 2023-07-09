@@ -88,6 +88,9 @@ a[role="button"]:hover, button:hover {
 	background-color: #88888833;
 }
 
+.red {
+	border: 1px solid red !important;
+}
 
 input, select {
 	display: block;
