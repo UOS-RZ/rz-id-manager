@@ -30,6 +30,7 @@ from ldap3.core.exceptions import LDAPBindError, LDAPPasswordIsMandatoryError
 from uosrzidmgr.config import config
 from uosrzidmgr.ldap import ldap_login, check_login, check_for_user
 from uosrzidmgr.db import with_session, Account, Status, AccountType, Action
+from uosrzidmgr.mail import mail
 
 # Logger
 logger = logging.getLogger(__name__)
@@ -304,6 +305,8 @@ def user_account_create(db, user_data):
     if request_only:
         account.status = Status.requested
         action.action = Status.requested
+        mail('User Account', 'User account needs to be approved:\n\n'
+             'http://127.0.0.1:5000/check/' + login)
     else:
         account.created = now
         account.status = Status.created
@@ -445,6 +448,8 @@ def user_account_create_from_invite(db):
     if request_only:
         account.status = Status.requested
         action.action = Status.requested
+        mail('User Account', 'User account needs to be approved:\n\n'
+             'http://127.0.0.1:5000/check/' + login)
     else:
         account.created = now
         account.status = Status.created
