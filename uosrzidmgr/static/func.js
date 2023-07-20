@@ -77,10 +77,12 @@ addEventListener("DOMContentLoaded", (event) => {
 	// Check that login does not already exist
 	const login = document.querySelector('input[name=login]')
 	login?.addEventListener('keyup', validateLogin)
+	login?.addEventListener('change', validateLogin)
 
 	// Check that the management login exists
 	const management_login = document.querySelector('input[name=management_login]')
 	management_login?.addEventListener('keyup', validateManagementLogin)
+	management_login?.addEventListener('change', validateManagementLogin)
 
 	// Suggest login name
 	const given = document.querySelector('input[name=name_given]')
