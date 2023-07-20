@@ -21,6 +21,7 @@ from email.mime.text import MIMEText
 
 from uosrzidmgr.config import config
 
+
 def mail(subject, message):
     sender = config('mail', 'from')
     receiver = config('mail', 'to')

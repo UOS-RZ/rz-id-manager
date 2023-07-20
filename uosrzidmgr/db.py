@@ -16,12 +16,11 @@
 
 import logging
 import enum
-import sqlalchemy
 
 from functools import wraps
 from datetime import datetime
 from sqlalchemy import create_engine, func, Column, Date, DateTime, String, \
-        Enum, Integer, TIMESTAMP
+        Enum, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -48,6 +47,7 @@ class Status(enum.Enum):
     invited = 2
     timeout = 3
     cancelled = 4
+
 
 class Gender(enum.Enum):
     not_specified = 0
@@ -104,7 +104,6 @@ class Action(Base):
     date = Column(DateTime, primary_key=True)
     user = Column(String, nullable=False)
     action = Column(Enum(Status), nullable=False)
-
 
     def __init__(self, login, user, action):
         self.login = login

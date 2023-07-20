@@ -16,7 +16,7 @@
 
 import argparse
 
-from uosrzidmgr.config import update_configuration, config
+from uosrzidmgr.config import update_configuration
 
 
 if __name__ == '__main__':

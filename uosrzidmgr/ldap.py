@@ -103,4 +103,4 @@ def check_for_user(given: str, family: str, birth: int) -> list:
 
     logger.debug('Searching for user data')
     conn.search(config('ldap', 'base_dn'), search_filter, attributes=['uid'])
-    return [ e['uid'] for e in conn.entries ]
+    return [e['uid'] for e in conn.entries]

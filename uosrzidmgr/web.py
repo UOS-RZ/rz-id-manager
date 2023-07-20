@@ -21,7 +21,6 @@ import yaml
 import random
 import string
 
-from datetime import datetime
 from dateutil.parser import parse
 from flask import Flask, request, redirect, render_template, session, jsonify
 from functools import wraps
@@ -245,7 +244,6 @@ def user_account_form(db, user_data):
     return render_template('user_account_create_form.html', **user_data)
 
 
-
 @app.route('/user_account', methods=['POST'])
 @with_session
 @verify_login
@@ -253,9 +251,6 @@ def user_account_form(db, user_data):
 def user_account_create(db, user_data):
     if user_data['csrf_token'] != request.form.get('csrf_token'):
         raise RuntimeError('CSRF token mismatch')
-
-    user = user_data['user']
-    now = datetime.now()
 
     login = request.form.get('login')
     if check_login(login):
@@ -332,7 +327,6 @@ def user_invite_create(db, user_data):
         raise RuntimeError('CSRF token mismatch')
 
     ou = user_data['organizational_unit']
-    now = datetime.now()
     invitation_key = random_string(64)
     login = request.form.get('login')
 
@@ -382,8 +376,8 @@ def user_invite_link(db, user_data, login):
 def invite_user_accept_form(db, invitation_key):
     i18n = __i18n[request.accept_languages.best_match(__languages) or 'en']
     account = db.query(Account)\
-            .where(Account.invitation_key == invitation_key)\
-            .one()
+                .where(Account.invitation_key == invitation_key)\
+                .one()
     return render_template('user_account_invite_accept_form.html', i18n=i18n,
                            account=account, invitation_key=invitation_key)
 
@@ -393,12 +387,11 @@ def invite_user_accept_form(db, invitation_key):
 @handle_errors
 def user_account_create_from_invite(db):
     i18n = __i18n[request.accept_languages.best_match(__languages) or 'en']
-    now = datetime.now()
 
     invitation_key = request.form.get('invitation_key')
     account = db.query(Account)\
-            .where(Account.invitation_key == invitation_key)\
-            .one()
+                .where(Account.invitation_key == invitation_key)\
+                .one()
 
     existing_account = request.form.get('existing_account').strip() or None
     name_given = request.form.get('name_given')
@@ -462,8 +455,8 @@ def account_info(db, user_data, login):
     assert_org(user_data, account)
 
     template = 'service_account_info.html' \
-            if account.account_type == AccountType.service \
-            else 'user_account_review.html'
+        if account.account_type == AccountType.service \
+        else 'user_account_review.html'
     return render_template(template, account=account,
                            **user_data)
 
@@ -477,8 +470,8 @@ def check_request(db, user_data, login):
         raise Exception('Only super admins are allowed to accept requests')
 
     account = db.query(Account)\
-            .where(Account.login == login)\
-            .one()
+                .where(Account.login == login)\
+                .one()
 
     potential_conflicts = []
     if account.existing_account:
@@ -518,8 +511,8 @@ def cancel_form(db, user_data, login):
 def cancel(db, user_data):
     login = request.form.get('login')
     account = db.query(Account)\
-            .where(Account.login == login)\
-            .one()
+                .where(Account.login == login)\
+                .one()
 
     assert_org(user_data, account)
 
