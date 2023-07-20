@@ -95,4 +95,9 @@ addEventListener("DOMContentLoaded", (event) => {
 	if (invite_link) {
 		invite_link.innerText = window.location.origin + invite_link.getAttribute('data-link')
 	}
+
+	// Mark required fields
+	for (let elem of document.querySelectorAll('*[required]')) {
+		elem.previousElementSibling.innerText += ' *';
+	}
 });

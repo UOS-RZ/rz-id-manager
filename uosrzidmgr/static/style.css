@@ -94,16 +94,9 @@ a[role="button"]:hover, button:hover {
 
 input, select {
 	display: block;
-	padding: 4px;
-	width: 100%;
-}
-
-select {
-	margin-right: -12px;
-}
-
-input[required] {
-	border-right: 2px solid red;
+	padding: 4px 6px;
+	border: 1px solid #888;
+	border-radius: 4px;
 }
 
 input[readonly] {
