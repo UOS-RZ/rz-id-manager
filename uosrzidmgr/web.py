@@ -131,7 +131,7 @@ def verify_login(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
         i18n = __i18n[request.accept_languages.best_match(__languages) or 'en']
-        user, email, given, family = session.get('login') or ([None] * 4)
+        user, email, csrf_token = session.get('login') or ([None] * 3)
         if not user:
             return render_template('login.html', i18n=i18n)
 
@@ -139,11 +139,10 @@ def verify_login(function):
         super_admin = user in (config('super_admins') or [])
 
         data = {'i18n': i18n,
+                'csrf_token': csrf_token,
                 'organizational_unit': ou,
                 'user': user,
                 'email': email,
-                'given': given,
-                'family': family,
                 'super_admin': super_admin}
         return function(*args, user_data=data, **kwargs)
     return wrapper
@@ -181,9 +180,8 @@ def login():
     user_data = ldap_login(user, password)
 
     email = user_data[config('ldap', 'userdata', 'email')][0]
-    given = user_data[config('ldap', 'userdata', 'name', 'given')]
-    family = user_data[config('ldap', 'userdata', 'name', 'family')]
-    session['login'] = (user, email, given, family)
+    csrf_token = random_string(32)
+    session['login'] = (user, email, csrf_token)
 
     return redirect('/', code=302)
 
@@ -205,7 +203,7 @@ def admin(db, user_data):
 @handle_errors
 @verify_login
 def service_account_form(user_data):
-    return render_template('create_service_account.html', **user_data)
+    return render_template('service_account_create_form.html', **user_data)
 
 
 @app.route('/service_account', methods=['POST'])
@@ -213,6 +211,9 @@ def service_account_form(user_data):
 @verify_login
 @handle_errors
 def service_account_create(db, user_data):
+    if user_data['csrf_token'] != request.form.get('csrf_token'):
+        raise RuntimeError('CSRF token mismatch')
+
     login = request.form.get('login')
     if check_login(login):
         raise RuntimeError('User with given username already exists')
@@ -250,6 +251,9 @@ def user_account_form(db, user_data):
 @verify_login
 @handle_errors
 def user_account_create(db, user_data):
+    if user_data['csrf_token'] != request.form.get('csrf_token'):
+        raise RuntimeError('CSRF token mismatch')
+
     user = user_data['user']
     now = datetime.now()
 
@@ -324,6 +328,9 @@ def invite_user_form(db, user_data):
 @verify_login
 @with_session
 def user_invite_create(db, user_data):
+    if user_data['csrf_token'] != request.form.get('csrf_token'):
+        raise RuntimeError('CSRF token mismatch')
+
     ou = user_data['organizational_unit']
     now = datetime.now()
     invitation_key = random_string(64)

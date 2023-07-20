@@ -4,6 +4,8 @@
 <form id=user_account action="/invite_user" method="POST">
 	<h3>{{ i18n.user_account.person.header }}</h3>
 
+	<input type=hidden name=csrf_token value="{{ csrf_token }}" />
+
 	<label for=name_given>{{ i18n.user_account.person.name.given }}</label>
 	<input type="text" name="name_given" placeholder="{{ i18n.user_account.person.name.given }}" required />
 	<label for=name_family>{{ i18n.user_account.person.name.family }}</label>

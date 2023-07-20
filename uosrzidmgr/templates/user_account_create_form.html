@@ -4,6 +4,8 @@
 <form id=user_account action="/user_account" method="POST">
 	<h3>{{ i18n.user_account.person.header }}</h3>
 
+	<input type=hidden name=csrf_token value="{{ csrf_token }}" />
+
 	<label for=gender>{{ i18n.user_account.person.gender.title }}</label>
 	<select name=gender>
 		<option value=male>{{ i18n.user_account.person.gender.male }}</option>
