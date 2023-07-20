@@ -55,7 +55,8 @@ div#navbar a.logout {
 	margin-left: 5px;
 	padding: 5px;
 	display: inline-block;
-	color: #f00;
+	color: red;
+	mix-blend-mode: normal;
 }
 
 div#navbar a:hover {
@@ -75,13 +76,13 @@ a[role="button"], button {
 	margin: 20px 0;
 	display: block;
 	padding: 15px;
-	font-size: large;
 	border: 1px solid gray;
 	border-radius: 10px;
 	text-align: center;
 	flex-grow: 1;
 	background: transparent;
 	color: white;
+	mix-blend-mode: difference;
 }
 
 a[role="button"]:hover, button:hover {
