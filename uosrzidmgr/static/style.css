@@ -136,12 +136,12 @@ button {
 	grid-template-columns: repeat(5, auto);
 }
 
-.accounts .head {
+.grid .head {
 	font-weight: bold;
 	border-bottom: 1px solid gray;
 }
 
-.accounts .no-data {
+.grid .no-data {
 	grid-column-end: span  4;
 	text-align: center;
 	padding: 15px;
