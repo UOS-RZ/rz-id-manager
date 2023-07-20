@@ -14,12 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from functools import wraps
 import logging
 import enum
-
 import sqlalchemy
-from sqlalchemy import create_engine, Column, Date, DateTime, String, Enum, Integer
+
+from functools import wraps
+from datetime import datetime
+from sqlalchemy import create_engine, func, Column, Date, DateTime, String, \
+        Enum, Integer, TIMESTAMP
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -67,9 +69,7 @@ class Account(Base):
     login = Column(String, primary_key=True)
     '''LDAP login'''
     existing_account = Column(String)
-    requested = Column(DateTime, nullable=False)
-    created = Column(DateTime)
-    status = Column(Enum(Status))
+    status = Column(Enum(Status), nullable=False)
     account_type = Column(Enum(AccountType))
     management_login = Column(String)
     gender = Column(Enum(Gender))
@@ -90,6 +90,10 @@ class Account(Base):
     private_email = Column(String)
     private_phone = Column(String)
     invitation_key = Column(String, nullable=True, unique=True)
+    modified = Column(DateTime(timezone=True), server_default=func.now(),
+                      onupdate=func.now())
+
+    __last_modified = None
 
 
 class Action(Base):
@@ -100,6 +104,13 @@ class Action(Base):
     date = Column(DateTime, primary_key=True)
     user = Column(String, nullable=False)
     action = Column(Enum(Status), nullable=False)
+
+
+    def __init__(self, login, user, action):
+        self.login = login
+        self.user = user
+        self.action = action
+        self.date = datetime.now()
 
 
 def with_session(f):

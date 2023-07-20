@@ -21,6 +21,9 @@ login: Login
 username: username
 password: password
 back: Back
+date_format:
+  short: '%Y-%m-%d'
+  long: '%Y-%m-%d %H:%M'
 service_account:
   header: Create service account
   login: Login

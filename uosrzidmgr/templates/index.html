@@ -13,7 +13,7 @@
 	<div class=head>Action</div>
 
 	{%- for user in users %}
-	<div>{{ user.requested }}</div>
+	<div title="{{ user.modified.strftime(i18n.date_format.long) }}">{{ user.modified.strftime(i18n.date_format.short) }}</div>
 	<div>{{ user.login }}</div>
 	<div>{{ user.status.name }}</div>
 	<div>

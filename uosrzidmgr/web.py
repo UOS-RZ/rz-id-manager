@@ -48,6 +48,10 @@ __i18n = {}
 __languages = []
 
 
+def random_string(length):
+    return ''.join(random.choices(string.ascii_letters, k=length))
+
+
 def organizational_unit(admin):
     for ou, admins in config('admins').items():
         if admin in admins:
@@ -192,7 +196,7 @@ def admin(db, user_data):
     if not user_data['super_admin']:
         raise Exception()
     users = db.query(Account)
-    actions = db.query(Action)
+    actions = db.query(Action).order_by(Action.date.desc())
     return render_template('admin.html', users=users, actions=actions,
                            **user_data)
 
@@ -209,8 +213,6 @@ def service_account_form(user_data):
 @verify_login
 @handle_errors
 def service_account_create(db, user_data):
-    now = datetime.now()
-
     login = request.form.get('login')
     if check_login(login):
         raise RuntimeError('User with given username already exists')
@@ -224,18 +226,11 @@ def service_account_create(db, user_data):
     account.password = request.form.get('password')
     account.organizational_unit = user_data['organizational_unit']
     account.management_login = management_login
-    account.requested = now
-    account.created = now
     account.status = Status.created
     account.account_type = AccountType.service
     db.add(account)
 
-    action = Action()
-    action.login = login
-    action.date = now
-    action.user = user_data['user']
-    action.action = Status.created
-    db.add(action)
+    db.add(Action(login, user_data['user'], Status.created))
     db.commit()
 
     return redirect('/', code=302)
@@ -276,9 +271,9 @@ def user_account_create(db, user_data):
     account = Account()
     account.existing_account = existing_account
     account.login = login
+    account.status = Status.created
     account.password = request.form.get('password')
     account.organizational_unit = user_data['organizational_unit']
-    account.requested = now
     account.account_type = AccountType[request.form.get('account_type')]
     account.gender = request.form.get('gender')
     account.name_given = request.form.get('name_given')
@@ -297,20 +292,13 @@ def user_account_create(db, user_data):
     account.private_email = request.form.get('private_email')
     account.private_phone = request.form.get('private_phone')
 
-    action = Action()
-    action.login = login
-    action.date = now
-    action.user = user_data['user']
+    action = Action(login, user_data['user'], Status.created)
 
     if request_only:
-        account.status = Status.requested
         action.action = Status.requested
+        account.status = Status.requested
         mail('User Account', 'User account needs to be approved:\n\n'
              'http://127.0.0.1:5000/check/' + login)
-    else:
-        account.created = now
-        account.status = Status.created
-        action.action = Status.created
     db.add(action)
     db.add(account)
     db.commit()
@@ -338,12 +326,12 @@ def invite_user_form(db, user_data):
 def user_invite_create(db, user_data):
     ou = user_data['organizational_unit']
     now = datetime.now()
-    invitation_key = ''.join(random.choices(string.ascii_letters, k=64))
+    invitation_key = random_string(64)
+    login = request.form.get('login')
 
     account = Account()
-    account.login = request.form.get('login')
+    account.login = login
     account.organizational_unit = ou
-    account.requested = now
     account.status = Status.invited
     account.account_type = AccountType[request.form.get('account_type')]
     account.name_given = request.form.get('name_given')
@@ -356,12 +344,7 @@ def user_invite_create(db, user_data):
     account.invitation_key = invitation_key
     db.add(account)
 
-    action = Action()
-    action.login = request.form.get('login')
-    action.date = now
-    action.user = user_data['user']
-    action.action = Status.invited
-    db.add(action)
+    db.add(Action(login, user_data['user'], Status.invited))
     db.commit()
 
     invitation_link = f'/invite/{invitation_key}'
@@ -440,20 +423,16 @@ def user_account_create_from_invite(db):
     account.private_email = request.form.get('private_email')
     account.private_phone = request.form.get('private_phone')
 
-    action = Action()
-    action.login = account.login
-    action.date = now
-    action.user = account.login
+    action = Action(account.login, account.login, Status.created)
 
     if request_only:
-        account.status = Status.requested
         action.action = Status.requested
+        account.status = Status.requested
         mail('User Account', 'User account needs to be approved:\n\n'
              'http://127.0.0.1:5000/check/' + login)
     else:
-        account.created = now
         account.status = Status.created
-        action.action = Status.created
+
     db.add(action)
     db.commit()
 
@@ -541,13 +520,7 @@ def cancel(db, user_data):
         raise Exception('Cannot cancel accounts in status %s', account.status)
 
     account.status = Status.cancelled
-
-    action = Action()
-    action.login = login
-    action.date = datetime.now()
-    action.user = user_data['user']
-    action.action = Status.cancelled
-    db.add(action)
+    db.add(Action(login, user_data['user'], Status.cancelled))
     db.commit()
 
     return redirect('/', code=302)

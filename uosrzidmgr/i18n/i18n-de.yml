@@ -21,11 +21,14 @@ login: Login
 username: Nutzername
 password: Passwort
 back: Zurück
+date_format:
+  short: '%d.%m.%Y'
+  long: '%d.%m.%Y %H:%M'
 service_account:
   header: Funktionskennung anlegen
   login: Login
+  management_login: Verwaltet durch
   password: Passwort
-  create: Account anlegen
   password_confirm: Passwort (bestätigen)
   create: Account anlegen
 user_account:
@@ -58,7 +61,7 @@ user_account:
       not_specified: Keine Angaben
     name:
       given: Vorname
-      family: nachname
+      family: Nachname
       title: Titel
     birthday: Geburtstag
   address:
