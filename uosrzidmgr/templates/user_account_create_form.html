@@ -18,7 +18,7 @@
 	<label for=title>{{ i18n.user_account.person.name.title }}</label>
 	<input type="text" name="title" placeholder="{{ i18n.user_account.person.name.title }}" />
 	<label for=birthday>{{ i18n.user_account.person.birthday }}</label>
-	<input type="date" name="birthday" />
+	<input type="date" name="birthday" required />
 
 	<h3>{{ i18n.user_account.address.work }}</h3>
 	<label for=work_street>{{ i18n.user_account.address.street }}</label>
@@ -62,7 +62,7 @@
 	<label for=password_confirm>{{ i18n.user_account.account_data.password_confirm }}</label>
 	<input type=password name=password_confirm placeholder="{{ i18n.user_account.account_data.password_confirm }}" required />
 	<label for=account_type>{{ i18n.user_account.account_data.account_type.title }}</label>
-	<select name=account_type>
+	<select name=account_type required>
 		<option value=staff>{{ i18n.user_account.account_data.account_type.staff }}</option>
 		<option value=guest>{{ i18n.user_account.account_data.account_type.guest }}</option>
 	</select>
