@@ -18,8 +18,6 @@ import glob
 import logging
 import os
 import yaml
-import random
-import string
 
 from dateutil.parser import parse
 from flask import Flask, request, redirect, render_template, session, jsonify
@@ -30,6 +28,8 @@ from uosrzidmgr.config import config
 from uosrzidmgr.ldap import ldap_login, check_login, check_for_user
 from uosrzidmgr.db import with_session, Account, Status, AccountType, Action
 from uosrzidmgr.mail import mail
+from uosrzidmgr.utils import random_string, organizational_unit
+
 
 # Logger
 logger = logging.getLogger(__name__)
@@ -45,17 +45,6 @@ app.secret_key = config('secret_key') or random_string(64)
 __error = {}
 __i18n = {}
 __languages = []
-
-
-def random_string(length):
-    return ''.join(random.choices(string.ascii_letters, k=length))
-
-
-def organizational_unit(admin):
-    for ou, admins in config('admins').items():
-        if admin in admins:
-            return ou
-    return None
 
 
 def error(error_id: str, code: int) -> tuple[str, int]:
