@@ -1,3 +1,13 @@
+var zipcodes = {};
+
+function loadZipCodes() {
+  fetch("/static/zipcodes.json")
+    .then((response) => response.json())
+    .then((codes) => {
+      zipcodes = codes;
+    });
+}
+
 function validateLogin() {
   const login = document.querySelector("input[name=login]");
   if (login.value.length < 4) {
@@ -80,11 +90,11 @@ function updateCity(post_code_field, ciry_field) {
 }
 
 function updateWorkCity() {
-  updateCity('work_post_code', 'work_city')
+  updateCity("work_post_code", "work_city");
 }
 
 function updatePrivateCity() {
-  updateCity('private_post_code', 'private_city')
+  updateCity("private_post_code", "private_city");
 }
 
 addEventListener("DOMContentLoaded", () => {
@@ -131,8 +141,13 @@ addEventListener("DOMContentLoaded", () => {
   }
 
   // Turn postal code into city
-  const work_post_code = document.querySelector( "input[name=work_post_code]");
+  const work_post_code = document.querySelector("input[name=work_post_code]");
   work_post_code?.addEventListener("change", updateWorkCity);
-  const private_post_code = document.querySelector( "input[name=private_post_code]");
+  const private_post_code = document.querySelector(
+    "input[name=private_post_code]",
+  );
   private_post_code?.addEventListener("change", updatePrivateCity);
+  if (work_post_code || private_post_code) {
+    loadZipCodes();
+  }
 });
