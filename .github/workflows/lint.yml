@@ -20,5 +20,19 @@ jobs:
         pip install -r requirements.txt
         pip install flake8
 
+    - name: set up node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: install JS dependencies
+      run: npm ci
+
     - name: run flake8
       run: flake8
+
+    - name: run ESLint
+      run: npm run lint
+
+    - name: run JS format check
+      run: npm run format-check

@@ -1,0 +1,14 @@
+{
+  "name": "rz-id-manager",
+  "private": true,
+  "scripts": {
+	 "format": "prettier --write 'uosrzidmgr/**/*.js'",
+    "format-check": "prettier --check 'uosrzidmgr/**/*.js'",
+    "lint": "eslint uosrzidmgr/**/*.js"
+  },
+  "author": "Lars Kiesow",
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "prettier": "^3.0.0"
+  }
+}
