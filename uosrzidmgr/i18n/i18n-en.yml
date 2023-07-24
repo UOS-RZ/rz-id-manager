@@ -31,6 +31,7 @@ service_account:
   password: Password
   password_confirm: Password (confirm)
   create: Create account
+  created: Service account created
 user_account:
   header: Create user account
   existing_account:
@@ -82,6 +83,7 @@ user_account:
     user: |
       By submitting this form, I confirm that I am aware of and consent to the
       current terms of Osnabrück University's digital services.
+  created: User account created
 user_invite:
   header: Create user invite
 invitation:

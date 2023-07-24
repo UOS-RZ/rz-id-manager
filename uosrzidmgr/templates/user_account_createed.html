@@ -1,9 +1,31 @@
 {% extends "layout.html" %}
 {% block body %}
-<h2>{{ i18n.user_account.header }}</h2>
+<h2>{{ i18n.user_account.created }}</h2>
 
 {% if created %}
+<p>
 A user account has been created.
+</p>
+<p>
+Please copy the following initial password and store it securely.
+You might need this if you forget the password and get in contact with the support to reset the account:
+</p>
+
+<pre>
+Initial password: {{ account.initial_password }}
+</pre>
+
+<h2>Set password</h2>
+
+<p>
+Next, please immediately head over to myRZ and set your own password.
+Use your initial password to login.
+</p>
+
+<a role=button href="https://myrz.uni-osnabrueck.de/" target=_blank>
+	Set password in myRZ
+	→
+</a>
 
 {% else %}
 <p>
@@ -14,10 +36,10 @@ The request will be checked and the account will be created.
 <p>
 You will be notified once the request has been processen.
 </p>
-{% endif %}
 
 {% if user %}
 <a href=/ role=button>Go back</a>
+{% endif %}
 {% endif %}
 
 {% endblock %}

@@ -31,6 +31,7 @@ service_account:
   password: Passwort
   password_confirm: Passwort (bestätigen)
   create: Account anlegen
+  created: Funktionskennung erstellt
 user_account:
   header: Nutzerkennung anlegen
   existing_account:
@@ -84,6 +85,7 @@ user_account:
       Mit dem Abschicken dieses Formulars bestätige ich, dass ich mir mit den
       Nutzungsbedingungen für die digitalen Dienste der Universität Osnabrück
       vertraut bin und diesen zustimme.
+  created: Nutzerkennung erstellt
 user_invite:
   header: Nutzereilandung erstellen
 invitation:

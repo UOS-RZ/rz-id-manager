@@ -224,6 +224,7 @@ def service_account_create(db, user_data):
     account = Account()
     account.login = login
     account.password = request.form.get('password')
+    account.initial_password = random_string(24)
     account.organizational_unit = user_data['organizational_unit']
     account.management_login = management_login
     account.status = Status.created
@@ -233,7 +234,8 @@ def service_account_create(db, user_data):
     db.add(Action(login, user_data['user'], Status.created))
     db.commit()
 
-    return redirect('/', code=302)
+    return render_template('service_account_created.html', account=account,
+                           **user_data)
 
 
 @app.route('/user_account', methods=['GET'])
@@ -271,7 +273,7 @@ def user_account_create(db, user_data):
     account.existing_account = existing_account
     account.login = login
     account.status = Status.created
-    account.password = request.form.get('password')
+    account.initial_password = random_string(24)
     account.organizational_unit = user_data['organizational_unit']
     account.account_type = AccountType[request.form.get('account_type')]
     account.gender = request.form.get('gender')
@@ -307,6 +309,7 @@ def user_account_create(db, user_data):
 
     return render_template('user_account_createed.html',
                            created=not request_only,
+                           account=account,
                            **user_data)
 
 
@@ -332,6 +335,7 @@ def user_invite_create(db, user_data):
 
     account = Account()
     account.login = login
+    account.initial_password = random_string(24)
     account.organizational_unit = ou
     account.status = Status.invited
     account.account_type = AccountType[request.form.get('account_type')]
@@ -404,7 +408,6 @@ def user_account_create_from_invite(db):
             or check_for_user(name_given, name_family, birthday_numerical))
     logger.debug('Account creation needs to be approved: %s', request_only)
 
-    account.password = request.form.get('password')
     account.existing_account = existing_account
     account.gender = request.form.get('gender')
     account.name_given = request.form.get('name_given')
@@ -440,7 +443,8 @@ def user_account_create_from_invite(db):
         logger.warn('TODO: Create account in LDAP')
 
     return render_template('user_account_createed.html', i18n=i18n,
-                           created=not request_only)
+                           created=not request_only,
+                           account=account)
 
 
 @app.route('/info/<login>', methods=['GET'])

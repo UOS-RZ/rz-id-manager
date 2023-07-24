@@ -68,6 +68,10 @@ class Account(Base):
     __tablename__ = 'account'
     login = Column(String, primary_key=True)
     '''LDAP login'''
+    initial_password = Column(String, nullable=False)
+    '''The initial user password'''
+    password = None
+    '''Password chosen by user and not stored in database'''
     existing_account = Column(String)
     status = Column(Enum(Status), nullable=False)
     account_type = Column(Enum(AccountType))
