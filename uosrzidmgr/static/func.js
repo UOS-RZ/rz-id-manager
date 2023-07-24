@@ -70,6 +70,23 @@ function validatePassword() {
   );
 }
 
+function updateCity(post_code_field, ciry_field) {
+  const post_code = document.querySelector(`input[name=${post_code_field}]`);
+  const city = document.querySelector(`input[name=${ciry_field}]`);
+  const name = zipcodes[post_code.value];
+  if (name && city) {
+    city.value = name;
+  }
+}
+
+function updateWorkCity() {
+  updateCity('work_post_code', 'work_city')
+}
+
+function updatePrivateCity() {
+  updateCity('private_post_code', 'private_city')
+}
+
 addEventListener("DOMContentLoaded", () => {
   // Verify passwords match
   const password = document.querySelector("input[name=password]");
@@ -112,4 +129,10 @@ addEventListener("DOMContentLoaded", () => {
   for (let elem of document.querySelectorAll("*[required]")) {
     elem.previousElementSibling.innerText += " *";
   }
+
+  // Turn postal code into city
+  const work_post_code = document.querySelector( "input[name=work_post_code]");
+  work_post_code?.addEventListener("change", updateWorkCity);
+  const private_post_code = document.querySelector( "input[name=private_post_code]");
+  private_post_code?.addEventListener("change", updatePrivateCity);
 });
