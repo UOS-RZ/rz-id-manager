@@ -40,7 +40,7 @@ if config('ui', 'directories', 'template'):
 if config('ui', 'directories', 'static'):
     flask_config['static_folder'] = config('ui', 'directories', 'static')
 app = Flask(__name__, **flask_config)
-app.secret_key = 'CHANHE_ME'
+app.secret_key = config('secret_key') or random_string(64)
 
 __error = {}
 __i18n = {}
