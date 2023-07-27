@@ -5,11 +5,11 @@
 {% if potential_conflicts %}
 <h3>Potential old accounts</h3>
 
-<nav id=actions>
+<ul>
 	{% for user in potential_conflicts %}
-	<a role=button href=#>{{ user }}</a>
+	<li>{{ user }}</li>
 	{% endfor %}
-</nav>
+</ul>
 {% endif %}
 
 <main class="grid grid-col-2">
@@ -64,7 +64,10 @@
 	<span>{{ account.work_phone }}</span>
 </main>
 
+
+{% if 0 %}
 {% if can_approve %}
 <a role=button href="/approve/{{ account.login }}">{{ i18n.user_account.header }}</a>
+{% endif %}
 {% endif %}
 {% endblock %}
