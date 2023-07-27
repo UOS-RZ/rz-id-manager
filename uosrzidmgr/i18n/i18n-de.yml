@@ -94,3 +94,8 @@ invitation:
     Eine Nutzereinladung wurde erstellt.
     Bitte kopieren Sie den folgenden Link
     und lassen Sie den Nutzer das Formular vervollständigen.
+action:
+  info: Accountdaten
+  invite_info: Einladungsdaten
+  cancel: Account-Erstellung abbrechen
+  check: Konflikt überprüfen

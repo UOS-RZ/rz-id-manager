@@ -15,15 +15,15 @@
 	<div>{{ user.organizational_unit }}</div>
 	<div>{{ user.status.name }}</div>
 	<div>
-		<a href="/info/{{ user.login }}" class="material-symbols-outlined">info</a>
+		<a href="/info/{{ user.login }}" class="material-symbols-outlined" title="{{ i18n.action.info }}">info</a>
 		{% if user.status.name == 'invited' %}
-		<a href="/invite_link/{{ user.login }}" class="material-symbols-outlined">share</a>
+		<a href="/invite_link/{{ user.login }}" class="material-symbols-outlined" title="{{ i18n.action.invite_info }}">share</a>
 		{% endif %}
 		{% if user.status.name == 'requested' %}
-		<a href="/check/{{ user.login }}" class="material-symbols-outlined">assignment_turned_in</a>
+		<a href="/check/{{ user.login }}" class="material-symbols-outlined" title="{{ i18n.action.check }}">assignment_turned_in</a>
 		{% endif %}
 		{% if user.status.name in ['invited', 'requested'] %}
-		<a href="/cancel/{{ user.login }}" class="material-symbols-outlined">cancel</a>
+		<a href="/cancel/{{ user.login }}" class="material-symbols-outlined" title="{{ i18n.action.cancel }}">cancel</a>
 		{% endif %}
 	</div>
 	{% else %}

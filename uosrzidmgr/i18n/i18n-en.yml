@@ -92,3 +92,8 @@ invitation:
     A user invitation has been created.
     The invite is valid for two weeks.
     Plewase copy the following link and have the user complete the form.
+action:
+  info: User info
+  invite_info: Invite information
+  cancel: Cancel account creation
+  check: Check conflict
